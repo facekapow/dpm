@@ -1,0 +1,22 @@
+{
+  "name": "dpm",
+  "version": "0.0.1",
+  "description": "desktop.js package manager",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"foo\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArielAbreu/dpm.git"
+  },
+  "author": "ArielAbreu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ArielAbreu/dpm/issues"
+  },
+  "homepage": "https://github.com/ArielAbreu/dpm#readme",
+  "bin": {
+    "dpm": "index.js"
+  }
+}
