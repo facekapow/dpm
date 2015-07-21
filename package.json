@@ -20,6 +20,7 @@
     "dpm": "index.js"
   },
   "dependencies": {
-    "unzip": "*"
+    "unzip": "*",
+    "shelljs": "*"
   }
 }

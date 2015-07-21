@@ -4,6 +4,7 @@ var args = process.argv.slice(2);
 var https = require('https');
 var fs = require('fs');
 var unzip = require('unzip');
+require('shelljs/global');
 
 if (!args[0]) {
   console.log('why no args?');
@@ -34,8 +35,23 @@ if (args[0] === 'install') {
               file.write(data);
             }).on('end', function() {
               file.end();
-              fs.createReadStream('apps/' + obj.tar).pipe(unzip.Extract({ path: 'apps' }));
-              fs.unlinkSync('apps/' + obj.tar);
+              fs.createReadStream('apps/' + obj.tar).pipe(unzip.Extract({ path: 'apps' })._parser.on('end', function() {
+                fs.unlinkSync('apps/' + obj.tar);
+                fs.stat('apps/' + args[1] + '/package.json', function(err) {
+                  if (!err) {
+                    cd('apps/' + args[1]);
+                    exec('npm install');
+                    cd('../..');
+                  }
+                });
+                fs.stat('apps/' + args[1] + '/bower.json', function(err) {
+                  if (!err) {
+                    cd('apps/' + args[1]);
+                    exec('bower update');
+                    cd('../..');
+                  }
+                });
+              }));
             });
           });
         } catch(e) {
