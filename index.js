@@ -34,7 +34,8 @@ if (args[0] === 'install') {
               file.write(data);
             }).on('end', function() {
               file.end();
-              fs.createReadStream('apps/' + obj.tar).pipe(unzip.Extract({ path: 'apps/' + args[1] }));
+              fs.createReadStream('apps/' + obj.tar).pipe(unzip.Extract({ path: 'apps' }));
+              fs.unlinkSync('apps/' + obj.tar);
             });
           });
         } catch(e) {
