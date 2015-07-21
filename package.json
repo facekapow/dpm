@@ -1,5 +1,5 @@
 {
-  "name": "dpm",
+  "name": "dpmjs",
   "version": "0.0.3",
   "description": "desktop.js package manager",
   "main": "index.js",
