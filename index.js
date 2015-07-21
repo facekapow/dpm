@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var args = process.argv.slice(2);
-var http = require('http');
+var https = require('https');
 var fs = require('fs');
 var unzip = require('unzip');
 
@@ -21,7 +21,7 @@ if (args[0] === 'install') {
     }
 
     var json_content = '';
-    http.get('https://raw.githubusercontent.com/ArielAbreu/desktopjs-apps/master/apps.json', function(res) {
+    https.get('https://raw.githubusercontent.com/ArielAbreu/desktopjs-apps/master/apps.json', function(res) {
       res.on('data', function(data) {
        json_content += data;
       }).on('end', function() {
@@ -29,7 +29,7 @@ if (args[0] === 'install') {
         try {
           var obj = json_obj[args[1]];
           var file = fs.createWriteStream('apps/' + obj.tar);
-          http.get('https://raw.githubusercontent.com/ArielAbreu/desktopjs-apps/master/apps/' + obj.tar, function(res) {
+          https.get('https://raw.githubusercontent.com/ArielAbreu/desktopjs-apps/master/apps/' + obj.tar, function(res) {
             res.on('data', function(data) {
               file.write(data);
             }).on('end', function() {

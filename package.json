@@ -18,5 +18,8 @@
   "homepage": "https://github.com/ArielAbreu/dpm#readme",
   "bin": {
     "dpm": "index.js"
+  },
+  "dependencies": {
+    "unzip": "*"
   }
 }
