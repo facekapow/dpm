@@ -3,7 +3,6 @@
 var args = process.argv.slice(2);
 var https = require('https');
 var fs = require('fs');
-var unzip = require('unzip');
 var shelljs = require('shelljs/global');
 var colors = require('colors');
 
@@ -71,40 +70,39 @@ if (args[0] === 'install') {
             process.stdout.write('\n');
             console.log('done downloading application.'.cyan);
             file.end();
-            fs.createReadStream('apps/' + obj.tar).pipe(unzip.Extract({ path: 'apps' })._parser.on('end', function() {
-              fs.unlinkSync('apps/' + obj.tar);
-              try {
-                fs.statSync('apps/' + args[1] + '/package.json');
-                cd('apps/' + args[1]);
-                console.log('\nbegin installing npm deps...\n'.yellow);
-                exec('npm install');
-                console.log('\ndone installing npm deps.\n'.green);
-                cd('../..');
-              } catch(e) {
-                // do nothing
-              }
+            exec('unzip apps/' + obj.tar + ' -d apps');
+            fs.unlinkSync('apps/' + obj.tar);
+            try {
+              fs.statSync('apps/' + args[1] + '/package.json');
+              cd('apps/' + args[1]);
+              console.log('\nbegin installing npm deps...\n'.yellow);
+              exec('npm install');
+              console.log('\ndone installing npm deps.\n'.green);
+              cd('../..');
+            } catch(e) {
+              // do nothing
+            }
 
-              try {
-                fs.statSync('apps/' + args[1] + '/bower.json');
-                cd('apps/' + args[1]);
-                console.log('\nbegin installing bower deps...\n'.yellow);
-                exec('bower update');
-                console.log('\ndone installing bower deps.\n'.green);
-                cd('../..');
-              } catch(e) {
-                // do nothing
-              }
+            try {
+              fs.statSync('apps/' + args[1] + '/bower.json');
+              cd('apps/' + args[1]);
+              console.log('\nbegin installing bower deps...\n'.yellow);
+              exec('bower update');
+              console.log('\ndone installing bower deps.\n'.green);
+              cd('../..');
+            } catch(e) {
+              // do nothing
+            }
 
-              if (!json_file.apps[args[1]]) {
-                json_file.apps[args[1]] = {};
-              }
+            if (!json_file.apps[args[1]]) {
+              json_file.apps[args[1]] = {};
+            }
 
-              json_file.apps[args[1]].version = obj.version;
+            json_file.apps[args[1]].version = obj.version;
 
-              fs.writeFileSync('apps/apps.json', JSON.stringify(json_file, null, 2));
+            fs.writeFileSync('apps/apps.json', JSON.stringify(json_file, null, 2));
 
-              console.log('btw, i\'m done.'.green);
-            }));
+            console.log('btw, i\'m done.'.green);
           });
         });
       });

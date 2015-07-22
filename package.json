@@ -1,6 +1,6 @@
 {
   "name": "dpmjs",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "desktop.js package manager",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,6 @@
     "dpm": "index.js"
   },
   "dependencies": {
-    "unzip": "*",
     "shelljs": "*",
     "colors": "*"
   }
