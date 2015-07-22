@@ -1,6 +1,6 @@
 {
   "name": "dpmjs",
-  "version": "0.0.6",
+  "version": "0.0.10",
   "description": "desktop.js package manager",
   "main": "index.js",
   "scripts": {
