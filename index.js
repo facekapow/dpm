@@ -67,7 +67,6 @@ if (args[0] === 'install') {
               process.stdout.cursorTo(0);
             }
             process.stdout.write(String((100.0 * cur / len).toFixed(2)) + '% downloaded...');
-            total_data += data;
             if (is_first) is_first = true;
           }).on('end', function() {
             process.stdout.write('\n');
