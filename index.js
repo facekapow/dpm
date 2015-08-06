@@ -57,7 +57,7 @@ if (args[0] === 'install') {
 
           res.setEncoding('binary');
 
-          res.pipe(fs.createWriteStream('apps/' + obj.tar));
+          var total_data = '';
 
           res.on('data', function(data) {
             cur += String(data).length;
@@ -67,10 +67,12 @@ if (args[0] === 'install') {
               process.stdout.cursorTo(0);
             }
             process.stdout.write(String((100.0 * cur / len).toFixed(2)) + '% downloaded...');
+            total_data += data;
             if (is_first) is_first = true;
           }).on('end', function() {
             process.stdout.write('\n');
             console.log('done downloading application.'.cyan);
+            fs.writeFileSync('apps/' + obj.tar, total_data, 'binary');
             exec('unzip apps/' + obj.tar + ' -d apps');
             fs.unlinkSync('apps/' + obj.tar);
             try {
