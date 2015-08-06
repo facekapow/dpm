@@ -56,8 +56,10 @@ if (args[0] === 'install') {
 
           var is_first = false;
 
+          res.setEncoding('binary');
+
           res.on('data', function(data) {
-            cur += data.length;
+            cur += String(data).length;
             if (is_first) process.stdout.write('\n');
             if (!is_first) {
               process.stdout.clearLine();
