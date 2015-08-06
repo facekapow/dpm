@@ -48,7 +48,6 @@ if (args[0] === 'install') {
           }
         }
 
-        var file = fs.createWriteStream('apps/' + obj.tar);
         https.get('https://raw.githubusercontent.com/ArielAbreu/desktopjs-apps/master/apps/' + obj.tar, function(res) {
           console.log('downloading application...'.underline.dim);
           var len = parseInt(res.headers['content-length'], 10);
@@ -58,6 +57,8 @@ if (args[0] === 'install') {
 
           res.setEncoding('binary');
 
+          res.pipe(fs.createWriteStream('apps/' + obj.tar));
+
           res.on('data', function(data) {
             cur += String(data).length;
             if (is_first) process.stdout.write('\n');
@@ -66,12 +67,11 @@ if (args[0] === 'install') {
               process.stdout.cursorTo(0);
             }
             process.stdout.write(String((100.0 * cur / len).toFixed(2)) + '% downloaded...');
-            file.write(data);
+            total_data += data;
             if (is_first) is_first = true;
           }).on('end', function() {
             process.stdout.write('\n');
             console.log('done downloading application.'.cyan);
-            file.end();
             exec('unzip apps/' + obj.tar + ' -d apps');
             fs.unlinkSync('apps/' + obj.tar);
             try {
