@@ -20,7 +20,8 @@
     "dpm": "index.js"
   },
   "dependencies": {
+    "colors": "*",
     "shelljs": "*",
-    "colors": "*"
+    "yargs": "^15.0.2"
   }
 }
